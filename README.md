@@ -122,12 +122,7 @@ The BaseField class, represents a question in your form and is instantiated once
 
 #### QOL tips
 * As long as you don't override the constructor of the BaseField class, all the matrix content will be put on this object
-automatically.
-If you have a"question" field in your matrix block in Netflex, then you will have access to it using `$this->question`
-* If your render method returns a Laravel view object (for example using the `view()` function) then the errors for the form will be hoisted to the default viewBag so you dont have to
-manually get the correct view bag when resolving errors for a particular field.
-* If your render method returns a Laravel view object, then you will also get only error messages related to your current field from the variable `$fieldErrors` 
-
+automatically. In other words; If you have a "question" field in your matrix block in Netflex, then you will have access to it using `$this->question`
 ```injectablephp
 <?php
 
@@ -175,3 +170,9 @@ class TextInput extends BaseField
 ```
 
 ### The View
+They are basically normal components
+It is recommended that you use the `view()` function when rendering these components.
+
+* If your render method returns a Laravel view object (for example using the `view()` function) then the errors for the form will be hoisted to the default viewBag so you dont have to
+  manually get the correct view bag when resolving errors for a particular field.
+* If your render method returns a Laravel view object, then you will also get only error messages related to your current field from the variable `$fieldErrors` 
