@@ -108,6 +108,12 @@ class Form extends Model implements FormModel
 
 ```
 
+#### `DefaultFormFieldName` trait
+The model must decare some values which are considered to be menial bookkeeping and not something the developer
+really should need to care about except for very  specific cases. This trait implements this functionality so the developer does not have to.
+
+What it does is default the named prefix for all fields to be "questions".
+If you want to rename this field, implement the relevant methods manually.
 
 ## Implementing custom field types
 
