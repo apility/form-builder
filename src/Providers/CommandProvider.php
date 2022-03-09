@@ -2,7 +2,7 @@
 namespace Netflex\FormBuilder\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Neflex\FormBuilder\Commands\Install;
+use Netflex\FormBuilder\Commands\Install;
 
 class CommandProvider extends ServiceProvider {
 

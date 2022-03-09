@@ -8,7 +8,8 @@
         }
     },
     "require": {
-        "netflex/sdk": "^3.3"
+        "netflex/sdk": "^4",
+        "netflex/structures": "^4"
     },
     "extra": {
         "laravel": {
