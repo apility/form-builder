@@ -4,7 +4,7 @@ namespace Netflex\FormBuilder\Repositories;
 
 use Illuminate\Support\Collection;
 use Netflex\FormBuilder\Exceptions\UnknownTypeException;
-use Netflex\FormBuilder\Fields\BaseField;
+use Netflex\FormBuilder\Interfaces\FormField;
 
 class FormFieldRepository implements \Netflex\FormBuilder\Interfaces\FormFieldRepository {
 
@@ -27,10 +27,9 @@ class FormFieldRepository implements \Netflex\FormBuilder\Interfaces\FormFieldRe
         }
     }
 
-
-    function transform( $object): BaseField
+    function transform($object): FormField
     {
-        if(is_array($object)) {
+        if(is_object($object)) {
             $object = (array)$object;
         }
 

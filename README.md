@@ -31,9 +31,17 @@ class FormBuilderServiceProvider extends FormBuilderBaseServiceProvider
 ```
 
 The `registerField` method registers a question/field type that can be rendered by the form builder. You can implement
-your own
-(see the section below for instructions). The class that is provided must extend
-the `Netflex\FormBuilder\Fields\BaseField` class.
+your own (see the section below for instructions). The class that is provided must implement
+the `Netflex\FormBuilder\Interfaces\FormField` class.
+
+We do have a basic implementation that comes with prefilled working bookkeeping 
+functionality such as formModel and name injection, as well as hoisting values 
+from the matrix field data into the model as attributes.
+
+It might be quicker to use this than implementing similar functionality manually.
+
+Check out the `Netflex\FormBuilder\Fields\BaseField` class.
+
 
 #### Overrides
 It is possible to override data coming from Netflex using an optional 3rd parameter to the `registerField` function.

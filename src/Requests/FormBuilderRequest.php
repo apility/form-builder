@@ -6,7 +6,7 @@ use Illuminate\Contracts\Validation\Factory as ValidationFactory;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\ValidationException;
-use Netflex\FormBuilder\Fields\BaseField;
+use Netflex\FormBuilder\Interfaces\FormField;
 use Netflex\FormBuilder\Interfaces\FormModel;
 use Netflex\FormBuilder\Traits\ResolveFormModelFields;
 
@@ -55,11 +55,11 @@ abstract class FormBuilderRequest extends FormRequest
             $fields = $this->resolveFormModelFields($form);
 
             $formFields = collect($fields)
-                ->mapWithKeys(fn(BaseField $field, $i) => [$form->getFormFieldRuleName($i) => $field->formValidators()])
+                ->mapWithKeys(fn(FormField $field, $i) => [$form->getFormFieldRuleName($i) => $field->formValidators()])
                 ->toArray();
 
             $formMessages = collect($fields)
-                ->mapWithKeys(fn(BaseField $field, $i) => [$form->getFormFieldRuleName($i) => $field->formValidationMessages()])
+                ->mapWithKeys(fn(FormField $field, $i) => [$form->getFormFieldRuleName($i) => $field->formValidationMessages()])
                 ->reduce(fn($p, $messages, $prefix) => array_merge(
                     $p,
                     collect($messages)->mapWithKeys(fn($v, $k) => [$prefix . "." . $k => $v])->toArray(),
