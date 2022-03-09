@@ -1,5 +1,5 @@
 {
-    "name": "netflex/form-builder",
+    "name": "apility/form-builder",
     "description": "Form builder base library for the Netflex SDK",
     "type": "library",
     "autoload": {
