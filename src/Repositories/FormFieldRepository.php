@@ -9,15 +9,22 @@ use Netflex\FormBuilder\Fields\BaseField;
 class FormFieldRepository implements \Netflex\FormBuilder\Interfaces\FormFieldRepository {
 
     private Collection $content;
+    private Collection $overrides;
+
 
     public function __construct()
     {
         $this->content = collect();
+        $this->overrides = collect();
     }
 
-    function registerField(string $matrixType, string $class)
+    function registerField(string $matrixType, string $class, ?array $overrides = null)
     {
         $this->content[$matrixType] = $class;
+
+        if($overrides) {
+            $this->overrides[$matrixType] = $overrides;
+        }
     }
 
 
@@ -27,8 +34,8 @@ class FormFieldRepository implements \Netflex\FormBuilder\Interfaces\FormFieldRe
             $object = (array)$object;
         }
 
-        if($this->content[$object['type']]) {
-            return new $this->content[$object['type']]($object);
+        if($this->content[$object['type']] ?? null) {
+            return new $this->content[$object['type']](array_merge($object, $this->overrides[$object['type']] ?? []));
         }
 
         throw new UnknownTypeException($object['type']);

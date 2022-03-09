@@ -35,6 +35,20 @@ your own
 (see the section below for instructions). The class that is provided must extend
 the `Netflex\FormBuilder\Fields\BaseField` class.
 
+#### Overrides
+It is possible to override data coming from Netflex using an optional 3rd parameter to the `registerField` function.
+You can supply an optional associative array to the function like this 
+
+```php
+  $repo->registerField('text', TextInput::class);
+  $repo->registerField('always-required-text', TextInput::class, ['required' => true]);
+```
+
+This is merely substituting any values from Netflex with these, that way you can omit fields that are configurable in the class,
+but not something the user should be able to change. Or lets you create reusable field types that can be configured when added.
+
+It is possible to add the same class more than once.
+
 ### Add the service providers to your `bootstrap/app.php`
 
 ```injectablephp
