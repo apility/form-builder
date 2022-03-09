@@ -12,7 +12,7 @@ $ composer require apility/form-builder
 
 Basic example.
 
-```injectablephp
+```php
 <?php
 namespace App\Providers;
 
@@ -59,7 +59,7 @@ It is possible to add the same class more than once.
 
 ### Add the service providers to your `bootstrap/app.php`
 
-```injectablephp
+```php
 $app->register(\App\Providers\FormBuilderServiceProvider::class);
 $app->register(\Netflex\FormBuilder\Providers\BaseProvider::class);
 ```
@@ -72,7 +72,7 @@ The `getFormAttributeKey` should be the same as the alias of the Matrix that con
 The `getErrorBagName` function decides where the validation errors for FormBuilderRequests go, this should often be
 something other than `default`.
 
-```injectablephp
+```php
 <?php
 
 namespace App\Models;
@@ -120,7 +120,7 @@ The BaseField class, represents a question in your form and is instantiated once
 #### QOL tips
 * As long as you don't override the constructor of the BaseField class, all the matrix content will be put on this object
 automatically. In other words; If you have a "question" field in your matrix block in Netflex, then you will have access to it using `$this->question`
-```injectablephp
+```php
 <?php
 
 namespace Netflex\FormBuilder\Fields;
@@ -212,7 +212,7 @@ but it is still possible.
 Sometimes you want a big alert that gives you a list of all failing validation errors when a user submitted a form and it
 failed to pass validation.
 Use the `<x-form-builder::validation-errors>` component for that.
-```injectablephp
+```php
 <x-form-builder::validation-errors :form="$form" />
 ```
 
