@@ -3,53 +3,85 @@
 ## Installation
 
 ### Add the form builder to your composer file
+
 ```shell
 $ composer require apility/form-builder
 ```
 
-### Create a new Service provider that extends the `Netflex\FormBuilder\ComponentProvider`
+### Create a new Service provider that extends the `Netflex\FormBuilder\Providers\FormBuilderServiceProvider`
 
-We have some simple prebuilt forms available if you dont need any custom functionality
+Basic example.
 
 ```injectablephp
 <?php
 namespace App\Providers;
 
-use Netflex\FormBuilder\ComponentProvider;
 use Netflex\FormBuilder\Fields\TextInput;
-use Netflex\FormBuilder\Fields\TextArea;
-use Netflex\FormBuilder\Scaffolds\Bootstrap5;
+use Netflex\FormBuilder\Interfaces\FormFieldRepository;
+use \Netflex\FormBuilder\Providers\FormBuilderServiceProvider as FormBuilderBaseServiceProvider;
 
-class FormProvider extends ComponentProvider {
-    public function register() {
-        $this->registerRenderer('bootstrap', Bootstrap5::class);
-        $this->registerField('input', TextInput::class);
-        $this->registerField('area', TextArea::class);
+class FormBuilderServiceProvider extends FormBuilderBaseServiceProvider
+{
+    
+    function boot(FormFieldRepository $repo)
+    {
+        $repo->registerField('text', TextInput::class);
     }
 }
 ```
-### Add the Service provider to your list of service providers
 
-TODO: Explain how
+The `registerField` method registers a question/field type that can be rendered by the form builder. You can implement
+your own
+(see the section below for instructions). The class that is provided must extend
+the `Netflex\FormBuilder\Fields\BaseField` class.
+
+### Add the service providers to your `bootstrap/app.php`
+
+```injectablephp
+$app->register(\App\Providers\FormBuilderServiceProvider::class);
+$app->register(\Netflex\FormBuilder\Providers\BaseProvider::class);
+```
+
+One of these is the one you made yourself, the other provides views.
 
 ### Have your form model implement the FormModel interface
 
+The `getFormAttributeKey` should be the same as the alias of the Matrix that contains the questions for the form.
+The `getErrorBagName` function decides where the validation errors for FormBuilderRequests go, this should often be
+something other than `default`.
+
 ```injectablephp
 <?php
+
 namespace App\Models;
 
+use Illuminate\Routing\Router;
 use Netflex\FormBuilder\Interfaces\FormModel;
+use Netflex\FormBuilder\Traits\DefaultFormFieldName;
 use Netflex\Structure\Model;
 
-class MyFormModel extends Model implements FormModel {
-    
+class Form extends Model implements FormModel
+{
+    use DefaultFormFieldName;
+
     /**
-    * The name of the matrix field in Netflex where the form data is located
-    * @return string
-    */
-    public function getFormAttributeKey(): string {
-        return "my-form-key";
+     * The directory_id associated with the model.
+     *
+     * @var int
+     */
+    protected $relationId = 12345;
+
+    //
+    public function getFormAttributeKey(): string
+    {
+        return "fields";
     }
+
+    public function getErrorBagName(): string
+    {
+        return "form";
+    }
+    
 }
 
 ```
@@ -57,5 +89,75 @@ class MyFormModel extends Model implements FormModel {
 ### Use form in blade template
 
 ```injectablephp
-<nf::form-builder :form="$form" renderer="bootstrap" />
+<x-form-builder::form :form="$form" />
 ```
+
+### Show all errors for the form
+
+```injectablephp
+<x-form-builder::validation-errors :form="$form" />
+```
+
+## Implementing custom field types
+
+### The Class
+In order to create your own field type, create a new class that extends the `Netflex\FormBuilder\Fields\BaseField` class.
+This is both a Laravel view and a special field class that requires you to extends certain variables.
+
+The BaseField class, represents a question in your form and is instantiated once for each
+
+#### QOL tips
+* As long as you don't override the constructor of the BaseField class, all the matrix content will be put on this object
+automatically.
+If you have a"question" field in your matrix block in Netflex, then you will have access to it using `$this->question`
+* If your render method returns a Laravel view object (for example using the `view()` function) then the errors for the form will be hoisted to the default viewBag so you dont have to
+manually get the correct view bag when resolving errors for a particular field.
+* If your render method returns a Laravel view object, then you will also get only error messages related to your current field from the variable `$fieldErrors` 
+
+```injectablephp
+<?php
+
+namespace Netflex\FormBuilder\Fields;
+
+class TextInput extends BaseField
+{
+    public $required;
+    public $question;
+    public $description;
+
+    public function formQuestion(): string
+    {
+        return $this->question ?? "Question is missing";
+    }
+
+    public function formDescription(): ?string
+    {
+        return $this->description;
+    }
+    
+    function formValidators(): array
+    {
+        return $this->required ? ['required'] : [];
+    }
+
+    function formValidationMessages(): array
+    {
+        return [
+            'required' => "Du må fylle inn '{$this->question}' feltet",
+        ];
+    }
+
+    public function render()
+    {
+        return view("form-builder::form-fields.text-input", [
+            'formName' => $this->formName(),
+            'question' => $this->question,
+            'description' => $this->description
+        ]);
+    }
+
+   
+}
+```
+
+### The View

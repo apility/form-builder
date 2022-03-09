@@ -8,14 +8,9 @@ namespace Netflex\FormBuilder\Fields;
  */
 class TextInput extends BaseField
 {
-    private $required;
-    private $question;
-    private $description;
-
-    public function formName(): string
-    {
-        return $this->question ?? "question is missing";
-    }
+    public $required;
+    public $question;
+    public $description;
 
     public function formQuestion(): string
     {
@@ -27,13 +22,24 @@ class TextInput extends BaseField
         return $this->description;
     }
 
-    public function isRequired(): bool
-    {
-        return !!$this->required;
-    }
-
     public function render()
     {
-        return '<input type="' . $this->formName() . '">'
+        return view("form-builder::form-fields.text-input", [
+            'formName' => $this->formName(),
+            'question' => $this->question,
+            'description' => $this->description
+        ]);
+    }
+
+    function formValidators(): array
+    {
+        return $this->required ? ['required'] : [];
+    }
+
+    function formValidationMessages(): array
+    {
+        return [
+            'required' => "Du må fylle inn '{$this->question}' feltet",
+        ];
     }
 }

@@ -12,8 +12,8 @@
             /// Default field block
             /// --------------------------------------------------------------------------------------------------
             ///
-            /// The default field block is the component that will render the standard fields that will be present
-            /// regardless of blocks in the form. It has to be a component that implements the **Netflex\FormBuilder\Interfaces\DefaultFieldsBlock**
+            /// The default field block is the components that will render the standard fields that will be present
+            /// regardless of blocks in the form. It has to be a components that implements the **Netflex\FormBuilder\Interfaces\DefaultFieldsBlock**
             'defaultsFieldBlock' => null, // TODO: Set a Default fields block
 
 

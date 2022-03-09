@@ -30,13 +30,6 @@ interface FormField extends Renderable
      */
     public function formDescription(): ?string;
 
-    /**
-     *
-     * If true, this field will be marked as
-     *
-     * @return bool
-     */
-    public function isRequired(): bool;
 
 
 
