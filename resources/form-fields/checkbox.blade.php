@@ -11,6 +11,7 @@
         <input type="checkbox"
                class="form-check-input form-builder-checkbox"
                id="{{ $formName }}"
+               name="{{ $formName }}"
                {{ old($formName) ? "checked" : "" }}
         >
         <label for="{{ $formName }}" class="form-builder-checkbox-label">{{ $labelText ?? $question }}</label>

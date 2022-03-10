@@ -61,7 +61,6 @@ It is possible to add the same class more than once.
 
 ```php
 $app->register(\App\Providers\FormBuilderServiceProvider::class);
-$app->register(\Netflex\FormBuilder\Providers\BaseProvider::class);
 ```
 
 One of these is the one you made yourself, the other provides views.
@@ -162,7 +161,6 @@ class TextInput extends BaseField
     public function render()
     {
         return view("form-builder::form-fields.text-input", [
-            'formName' => $this->formName(),
             'question' => $this->question,
             'description' => $this->description
         ]);
