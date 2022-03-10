@@ -11,7 +11,7 @@
            id="{{ $formName }}"
            placeholder="{{ $placeholder ?? "" }}"
            name="{{ $formName }}"
-           value="{{ old($formName) }}"
+           value="{{ old($ruleName) }}"
             {{ $max ? "max=$max" : "" }}
             {{ $min ? "min=$min" : "" }}
 

@@ -49,7 +49,10 @@ class Form extends Component
         $data = $field->render();
 
         if($data instanceof \Illuminate\View\View) {
-            $data->withErrors($this->errors)->with('fieldErrors', $this->errors->get($this->form->getFormFieldRuleName($index)));
+            $data->withErrors($this->errors)
+                ->with('fieldErrors', $this->errors->get($this->form->getFormFieldRuleName($index)))
+                ->with('formName', $this->form->getFormFieldName($index))
+                ->with('ruleName', $this->form->getFormFieldRuleName($index));
         }
 
         return $data;

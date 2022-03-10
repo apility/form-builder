@@ -1,5 +1,8 @@
 
 <div class="mb-4">
+    @dump(session()->all())
+    @dump(old($formName))
+    @dump(old($ruleName))
     <label class="form-label form-builder-label" for="{{ $formName }}">
         {{ $question }}
         @if($required)
@@ -11,7 +14,7 @@
            id="{{ $formName }}"
            placeholder="{{ $placeholder ?? "" }}"
            name="{{ $formName }}"
-           value="{{ old($formName) }}"
+           value="{{ old($ruleName) }}"
            {{ $required ? "required" : "" }}
     >
     @if($fieldErrors)

@@ -10,7 +10,6 @@ abstract class BaseField extends Component implements FormField
 {
 
     public ?FormModel $form = null;
-    public string $name;
 
 
     public function __construct(array $data)
@@ -20,17 +19,6 @@ abstract class BaseField extends Component implements FormField
         }
     }
 
-
-    /**
-     *
-     * The name of the field.
-     *
-     * @return string
-     */
-    function formName(): string
-    {
-        return $this->name;
-    }
 
     /**
      *
@@ -59,19 +47,6 @@ abstract class BaseField extends Component implements FormField
     public function setFormModel(FormModel $form): self
     {
         $this->form = $form;
-        return $this;
-    }
-
-    /**
-     *
-     * Informs the FormField of the name it is supposed to have
-     *
-     * @param string $name
-     * @return $this
-     */
-    public function setFormName(string $name): self
-    {
-        $this->name = $name;
         return $this;
     }
 

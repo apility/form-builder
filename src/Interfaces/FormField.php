@@ -6,13 +6,6 @@ use Illuminate\Contracts\Support\Renderable;
 
 interface FormField extends Renderable
 {
-    /**
-     *
-     * The name of the field.
-     *
-     * @return string
-     */
-    public function formName(): string;
 
     /**
      *
@@ -40,13 +33,6 @@ interface FormField extends Renderable
      */
     public function setFormModel(FormModel $form): self;
 
-    /**
-     * Informs the field of the name it is supposed to have
-     *
-     * @param string $name
-     * @return $this
-     */
-    public function setFormName(string $name): self;
 
     /**
      * Return a list of form validation rules the same way laravel does it when making Requests(must use array syntarx, not string)

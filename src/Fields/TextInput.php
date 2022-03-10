@@ -28,7 +28,6 @@ class TextInput extends BaseField
     {
 
         return view("form-builder::form-fields.text-input", [
-            'formName' => $this->formName(),
             'question' => $this->formQuestion(),
             'description' => $this->formDescription(),
             'placeholder' => $this->placeholder,

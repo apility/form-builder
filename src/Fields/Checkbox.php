@@ -26,7 +26,6 @@ class Checkbox extends BaseField
     public function render()
     {
         return view("form-builder::form-fields.checkbox", [
-            'formName' => $this->formName(),
             'question' => $this->formQuestion(),
             'description' => $this->formDescription(),
             'labelText' => $this->labelText,

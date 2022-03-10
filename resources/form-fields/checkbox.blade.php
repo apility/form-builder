@@ -12,7 +12,7 @@
                class="form-check-input form-builder-checkbox"
                id="{{ $formName }}"
                name="{{ $formName }}"
-               {{ old($formName) ? "checked" : "" }}
+               {{ old($ruleName) ? "checked" : "" }}
         >
         <label for="{{ $formName }}" class="form-builder-checkbox-label">{{ $labelText ?? $question }}</label>
     </div>

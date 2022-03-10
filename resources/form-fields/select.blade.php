@@ -14,7 +14,7 @@
 
             <option
                     value="{{ $option }}"
-                    {{ old($formName) == $option ? "selected" : "" }}
+                    {{ old($ruleName) == $option ? "selected" : "" }}
             >
                 {{ $option }}
             </option>

@@ -12,7 +12,7 @@
               placeholder="{{ $placeholder ?? "" }}"
               name="{{ $formName }}"
               {{ $required ? "required" : "" }}
-              rows="{{ $columns }}">{{ old($formName) }}</textarea>
+              rows="{{ $columns }}">{{ old($ruleName) }}</textarea>
     @if($fieldErrors)
         <span class="form-description text-danger">{{ $fieldErrors[0] }}</span>
     @else
