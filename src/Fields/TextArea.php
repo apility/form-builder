@@ -39,7 +39,6 @@ class TextArea extends BaseField
     public function render()
     {
         return view("form-builder::form-fields.text-area", [
-            'formName' => $this->formName(),
             'question' => $this->formQuestion(),
             'description' => $this->formDescription(),
             'placeholder' => $this->placeholder,

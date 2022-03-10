@@ -10,6 +10,12 @@ $ composer require apility/form-builder
 
 ### Create a new Service provider that extends the `Netflex\FormBuilder\Providers\FormBuilderServiceProvider`
 
+```shell
+$ php artisan form-builder:install
+```
+
+Will generate a new service provider **remember to register it**.
+
 Basic example.
 
 ```php
@@ -257,13 +263,14 @@ This text field is forced to be a number field. It also validates number ranges 
 Placeholder is set to an i18n value that indicates potential top/bottom bounds of valid options. 
 
 #### Arguments
-| Name        | Description                                                                          |
-|-------------|--------------------------------------------------------------------------------------|
-| question    | The question that will be shown in the field label                                   |
-| description | Help text shown beneath the input field                                              |
-| required    | Boolean value that describes if the field is required                                |
-| min         | Numeric field for a minimum value, not required                                      | 
-| max         | Numeric field for a maximum value, not required                                      | 
+| Name        | Description                                           |
+|-------------|-------------------------------------------------------|
+| question    | The question that will be shown in the field label    |
+| description | Help text shown beneath the input field               |
+| required    | Boolean value that describes if the field is required |
+| min         | Numeric field for a minimum value, not required       | 
+| max         | Numeric field for a maximum value, not required       |
+| step        | Number step fields                                    | 
 
 #### Internationalization
 The following internationalization keys are used by this field
@@ -349,3 +356,59 @@ The following internationalization keys are used by this field
   <br> This field determines the message the user sees when no value has been selected (if required is set)
   <br> **Following variables can be used in the form**
   * `:name` Returns the question
+
+## Form Validation
+The package comes with a juiced up Laravel HTTP class that can automatically validate form fields.
+This allows you to specify validation logic per component and not have to deal with it, as long as you use laravel form
+requests.
+
+```shell
+$ php artisan make:form-builder
+```
+
+works similarilly to `make:request` and will create a standard request.
+
+Basic example
+
+```php
+<?php
+
+namespace App\Http\Requests\FormBuilder;
+
+use Illuminate\Foundation\Http\FormRequest;
+use Netflex\FormBuilder\Interfaces\Form;
+use Netflex\FormBuilder\Interfaces\FormModel;
+use Netflex\FormBuilder\Requests\FormBuilderRequest;
+
+class NormalFormRequest extends FormBuilderRequest
+{
+    /**
+     * Determine if the user is authorized to make this request.
+     *
+     * @return bool
+     */
+    public function authorize()
+    {
+        return true;
+    }
+
+    public function rules() {
+        return [
+        ];
+    }
+
+    /**
+     *
+     * Resolve the same form that you used to render the submitted form
+     *
+     * @return FormModel|null
+     */
+    function getForm(): ?FormModel
+    {
+        // TODO: Resolve form
+    }
+}
+```
+
+The `getForm` method must return the same form that was used to render the submitted form.
+Personally, I like using url parameters for this. That way we can use the Route parameter injection in 

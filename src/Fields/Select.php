@@ -28,7 +28,6 @@ class Select extends \Netflex\FormBuilder\Fields\BaseField
         ->values();
 
         return view("form-builder::form-fields.select", [
-            'formName' => $this->formName(),
             'question' => $this->formQuestion(),
             'description' => $this->formDescription(),
             'required' => !!$this->required,

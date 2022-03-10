@@ -8,11 +8,12 @@ namespace Netflex\FormBuilder\Fields;
  */
 class NumericTextInput extends BaseField
 {
-    public $required;
-    public $question;
-    public $description;
-    public ?string $min;
-    public ?string $max;
+    public ?string $required = null;
+    public ?string $question = null;
+    public ?string $description = null;
+    public ?string $min = null;
+    public ?string $max = null;
+    public ?string $step = null;
 
     public function formQuestion(): string
     {
@@ -31,13 +32,13 @@ class NumericTextInput extends BaseField
             ->join(" - ");
 
         return view("form-builder::form-fields.numeric-text-input", [
-            'formName' => $this->formName(),
             'question' => $this->formQuestion(),
             'description' => $this->formDescription(),
             'placeholder' => $valueRange ? __("form-builder.question.numeric-text-input.placeholder", ['range' => $valueRange]) : "",
             'min' => $this->min,
             'max' => $this->max,
             'required' => !!$this->required,
+            'step' => $this->step,
         ]);
     }
 

@@ -14,6 +14,7 @@
            value="{{ old($ruleName) }}"
             {{ $max ? "max=$max" : "" }}
             {{ $min ? "min=$min" : "" }}
+            {{ $step ? "step=\"$step\"" : "" }}
 
             {{ $required ? "required" : "" }}
     >
