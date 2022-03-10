@@ -14,7 +14,7 @@ trait ModelFormFieldsResolver
 {
 
     abstract public function resolveFormModelFields(FormModel $model, ?FormFieldRepository $repo = null): Collection;
-    abstract public function getFormFieldRuleName(int $index): string;
+    abstract public function getFormFieldRuleName(int $index, FormField $field): string;
 
     public function getFormFields(): Collection {
         return $this->resolveFormModelFields($this, null);
@@ -25,18 +25,12 @@ trait ModelFormFieldsResolver
         $request = $request ?? request();
 
         return $this->getFormFields()
-            ->mapWithKeys(function(FormField $field, $i) use ($request) {
-
-                $payload = (object)[
+            ->map(function(FormField $field, $i) use ($request) {
+                return (object)[
                     'field' => $field,
-                    'value' => $request->input($this->getFormFieldRuleName($i)),
+                    'value' => $request->input($this->getFormFieldRuleName($i, $field)),
                 ];
 
-                if($field instanceof NameResolvableFormField) {
-                    return [$field->getResolveByName() => $payload];
-                } else {
-                    return [$i => $payload];
-                }
             });
     }
 }

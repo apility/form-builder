@@ -2,6 +2,8 @@
 
 namespace Netflex\FormBuilder\Fields;
 
+use Netflex\FormBuilder\Interfaces\NameResolvableFormField;
+
 /**
  *
  *
@@ -26,7 +28,6 @@ class TextInput extends BaseField
 
     public function render()
     {
-
         return view("form-builder::form-fields.text-input", [
             'question' => $this->formQuestion(),
             'description' => $this->formDescription(),
@@ -47,4 +48,5 @@ class TextInput extends BaseField
             'required' => __("form-builder.question.text-input.required", ['name' => $this->formQuestion()]),
         ];
     }
+
 }

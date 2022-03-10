@@ -9,7 +9,6 @@ use Netflex\FormBuilder\Repositories\FormFieldRepository;
 
 trait ResolveFormModelFields
 {
-
     public function resolveFormModelFields(FormModel $model, ?FormFieldRepository $repo = null): Collection {
         $repo = $repo ?? Container::getInstance()->get(\Netflex\FormBuilder\Interfaces\FormFieldRepository::class);
         return collect($model[$model->getFormAttributeKey()])

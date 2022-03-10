@@ -55,11 +55,11 @@ abstract class FormBuilderRequest extends FormRequest
             $fields = $this->resolveFormModelFields($form);
 
             $formFields = collect($fields)
-                ->mapWithKeys(fn(FormField $field, $i) => [$form->getFormFieldRuleName($i) => $field->formValidators()])
+                ->mapWithKeys(fn(FormField $field, $i) => [$form->getFormFieldRuleName($i, $field) => $field->formValidators()])
                 ->toArray();
 
             $formMessages = collect($fields)
-                ->mapWithKeys(fn(FormField $field, $i) => [$form->getFormFieldRuleName($i) => $field->formValidationMessages()])
+                ->mapWithKeys(fn(FormField $field, $i) => [$form->getFormFieldRuleName($i, $field) => $field->formValidationMessages()])
                 ->reduce(fn($p, $messages, $prefix) => array_merge(
                     $p,
                     collect($messages)->mapWithKeys(fn($v, $k) => [$prefix . "." . $k => $v])->toArray(),
