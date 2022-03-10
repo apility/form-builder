@@ -25,7 +25,7 @@ trait ModelFormFieldsResolver
         $request = $request ?? request();
 
         return $this->getFormFields()
-            ->map(function(FormField $field, $i) use ($request) {
+            ->mapWithKeys(function(FormField $field, $i) use ($request) {
                 $payload = (object)[
                     'field' => $field,
                     'value' => $request->input($this->getFormFieldRuleName($i, $field)),
