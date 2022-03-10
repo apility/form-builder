@@ -26,10 +26,17 @@ trait ModelFormFieldsResolver
 
         return $this->getFormFields()
             ->map(function(FormField $field, $i) use ($request) {
-                return (object)[
+                $payload = (object)[
                     'field' => $field,
                     'value' => $request->input($this->getFormFieldRuleName($i, $field)),
                 ];
+
+                if($field instanceof NameResolvableFormField) {
+                    return [ $field->getResolveByName() => $payload];
+                } else {
+                    return [$i => $payload];
+                }
+
 
             });
     }
