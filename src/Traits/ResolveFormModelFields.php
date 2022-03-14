@@ -4,6 +4,7 @@ namespace Netflex\FormBuilder\Traits;
 
 use Illuminate\Container\Container;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Blade;
 use Netflex\FormBuilder\Interfaces\FormModel;
 use Netflex\FormBuilder\Repositories\FormFieldRepository;
 
@@ -13,5 +14,8 @@ trait ResolveFormModelFields
         $repo = $repo ?? Container::getInstance()->get(\Netflex\FormBuilder\Interfaces\FormFieldRepository::class);
         return collect($model[$model->getFormAttributeKey()])
             ->map(fn($data, $index) => $repo->transform($data)->setFormModel($model));
+
     }
+
+
 }

@@ -13,6 +13,7 @@ use Netflex\FormBuilder\Interfaces\FormField;
 use Netflex\FormBuilder\Interfaces\FormModel;
 use Netflex\FormBuilder\Traits\ErrorBagResolver;
 use Netflex\FormBuilder\Traits\ResolveFormModelFields;
+use Netflex\Support\HtmlString;
 
 class Form extends Component
 {
@@ -46,16 +47,21 @@ class Form extends Component
     }
 
     public function renderField(FormField $field, int $index) {
-        $data = $field->render();
 
-        if($data instanceof \Illuminate\View\View) {
-            $data->withErrors($this->errors)
-                ->with('fieldErrors', $this->errors->get($this->form->getFormFieldRuleName($index, $field)))
-                ->with('formName', $this->form->getFormFieldName($index, $field))
-                ->with('ruleName', $this->form->getFormFieldRuleName($index, $field));
+        if($field instanceof Component) {
+            $data = $field->render();
+
+            if($data instanceof \Illuminate\View\View) {
+                return new HtmlString($data->withErrors($this->errors)
+                    ->with($field->data())
+                    ->with('fieldErrors', $this->errors->get($this->form->getFormFieldRuleName($index, $field)))
+                    ->with('formName', $this->form->getFormFieldName($index, $field))
+                    ->with('ruleName', $this->form->getFormFieldRuleName($index, $field))->render());
+            }
+            return $data;
         }
 
-        return $data;
+        return $field;
     }
 
 }
