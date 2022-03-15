@@ -4,4 +4,3 @@
 @foreach($fields as $i => $field)
     {{ $renderField($field, $i) }}
 @endforeach
-x
