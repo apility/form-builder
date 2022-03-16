@@ -5,6 +5,7 @@ namespace Netflex\FormBuilder\Repositories;
 use Illuminate\Support\Collection;
 use Netflex\FormBuilder\Exceptions\UnknownTypeException;
 use Netflex\FormBuilder\Interfaces\FormField;
+use Netflex\Query\QueryableModel;
 
 class FormFieldRepository implements \Netflex\FormBuilder\Interfaces\FormFieldRepository {
 
@@ -30,7 +31,11 @@ class FormFieldRepository implements \Netflex\FormBuilder\Interfaces\FormFieldRe
     function transform($object): FormField
     {
         if(is_object($object)) {
-            $object = (array)$object;
+            if ($object instanceof QueryableModel) {
+                $object = $object->toArray();
+            } else {
+                $object = (array) $object;
+            }
         }
 
         if($this->content[$object['type']] ?? null) {
