@@ -1,20 +1,13 @@
 <?php
 
 namespace Netflex\FormBuilder\Fields;
-
-use Netflex\FormBuilder\Interfaces\NameResolvableFormField;
-
-/**
- *
- *
- */
-class TextInput extends BaseField
+class Select extends \Netflex\FormBuilder\Fields\BaseField
 {
+
     public $required;
     public $question;
     public $description;
-    public ?string $placeholder = "";
-    public string $formType = "text";
+    public ?string $options;
 
     public function formQuestion(): string
     {
@@ -28,12 +21,17 @@ class TextInput extends BaseField
 
     public function render()
     {
-        return view("form-builder::form-fields.text-input", [
+
+        $options = collect(explode("\n", $this->options ?? ""))
+        ->map(fn($str) => trim($str))
+        ->filter()
+        ->values();
+
+        return view("form-builder::form-fields.select", [
             'question' => $this->formQuestion(),
             'description' => $this->formDescription(),
-            'placeholder' => $this->placeholder,
             'required' => !!$this->required,
-            'formType' => $this->formType ?: "text",
+            'options' => $options,
         ]);
     }
 
@@ -45,8 +43,12 @@ class TextInput extends BaseField
     function formValidationMessages(): array
     {
         return [
-            'required' => __("form-builder.question.text-input.required", ['name' => $this->formQuestion()]),
+            'required' => __("form-builder.question.select.required", ['name' => $this->formQuestion()]),
         ];
     }
 
+    public function preselected()
+    {
+        return null;
+    }
 }

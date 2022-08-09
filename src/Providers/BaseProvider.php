@@ -3,7 +3,7 @@ namespace Netflex\FormBuilder\Providers;
 
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
-use Netflex\FormBuilder\Commands\Install;
+use Netflex\FormBuilder\Commands\InstallServiceProvider;
 use Netflex\FormBuilder\Components\Form;
 use Netflex\FormBuilder\Components\ValidationErrors;
 

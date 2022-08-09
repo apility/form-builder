@@ -1,0 +1,29 @@
+<?php
+
+namespace {{ namespace }};
+
+use Illuminate\Foundation\Http\FormRequest;
+use Netflex\FormBuilder\Interfaces\Form;
+use Netflex\FormBuilder\Interfaces\FormModel;
+use Netflex\FormBuilder\Requests\FormBuilderRequest;
+
+class {{ class }} extends FormBuilderRequest
+{
+
+    public function rules() {
+        return [
+        	// Non Form model validations go here
+        ];
+    }
+
+    /**
+     *
+     * Resolve the same form that you used to render the submitted form
+     *
+     * @return FormModel|null
+     */
+    function getForm(): ?FormModel
+    {
+        // TODO: Resolve form
+    }
+}

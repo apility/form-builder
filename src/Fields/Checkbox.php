@@ -2,19 +2,16 @@
 
 namespace Netflex\FormBuilder\Fields;
 
-use Netflex\FormBuilder\Interfaces\NameResolvableFormField;
-
 /**
  *
  *
  */
-class TextInput extends BaseField
+class Checkbox extends BaseField
 {
     public $required;
     public $question;
     public $description;
-    public ?string $placeholder = "";
-    public string $formType = "text";
+    public $labelText;
 
     public function formQuestion(): string
     {
@@ -28,12 +25,11 @@ class TextInput extends BaseField
 
     public function render()
     {
-        return view("form-builder::form-fields.text-input", [
+        return view("form-builder::form-fields.checkbox", [
             'question' => $this->formQuestion(),
             'description' => $this->formDescription(),
-            'placeholder' => $this->placeholder,
+            'labelText' => $this->labelText,
             'required' => !!$this->required,
-            'formType' => $this->formType ?: "text",
         ]);
     }
 
@@ -45,8 +41,7 @@ class TextInput extends BaseField
     function formValidationMessages(): array
     {
         return [
-            'required' => __("form-builder.question.text-input.required", ['name' => $this->formQuestion()]),
+            'required' => __("form-builder.question.checkbox.required", ['name' => $this->formQuestion()]),
         ];
     }
-
 }

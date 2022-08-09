@@ -9,11 +9,11 @@ use Illuminate\Support\MessageBag;
 use Illuminate\Support\ViewErrorBag;
 use Illuminate\View\Component;
 use Netflex\FormBuilder\Exceptions\InvalidArgumentException;
-use Netflex\FormBuilder\Fields\BaseField;
-use Netflex\FormBuilder\Interfaces\FormFieldRepository;
+use Netflex\FormBuilder\Interfaces\FormField;
 use Netflex\FormBuilder\Interfaces\FormModel;
 use Netflex\FormBuilder\Traits\ErrorBagResolver;
 use Netflex\FormBuilder\Traits\ResolveFormModelFields;
+use Netflex\Support\HtmlString;
 
 class Form extends Component
 {
@@ -46,14 +46,22 @@ class Form extends Component
         ])->withErrors($this->errors);
     }
 
-    public function renderField(BaseField $field, int $index) {
-        $data = $field->render();
+    public function renderField(FormField $field, int $index) {
 
-        if($data instanceof \Illuminate\View\View) {
-            $data->withErrors($this->errors)->with('fieldErrors', $this->errors->get($this->form->getFormFieldRuleName($index)));
+        if($field instanceof Component) {
+            $data = $field->render();
+
+            if($data instanceof \Illuminate\View\View) {
+                return new HtmlString($data->withErrors($this->errors)
+                    ->with($field->data())
+                    ->with('fieldErrors', $this->errors->get($this->form->getFormFieldRuleName($index, $field)))
+                    ->with('formName', $this->form->getFormFieldName($index, $field))
+                    ->with('ruleName', $this->form->getFormFieldRuleName($index, $field))->render());
+            }
+            return $data;
         }
 
-        return $data;
+        return $field;
     }
 
 }
