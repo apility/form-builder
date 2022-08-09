@@ -11,10 +11,9 @@
             name="{{ $formName }}"
     >
         @foreach($options as $option)
-
             <option
                     value="{{ $option }}"
-                    {{ old($ruleName) == $option ? "selected" : "" }}
+                    {{ (old($ruleName) ?? $preselected()) == $option ? "selected" : "" }}
             >
                 {{ $option }}
             </option>

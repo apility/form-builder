@@ -46,4 +46,9 @@ class Select extends \Netflex\FormBuilder\Fields\BaseField
             'required' => __("form-builder.question.select.required", ['name' => $this->formQuestion()]),
         ];
     }
+
+    public function preselected()
+    {
+        return null;
+    }
 }
