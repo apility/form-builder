@@ -5,11 +5,11 @@ namespace Netflex\FormBuilder\Fields;
 class TextArea extends BaseField
 {
 
-    protected ?string $question = null;
-    protected ?string $description = null;
-    protected ?string $placeholder = null;
-    protected $required = null;
-    protected string $columns = "10";
+    public ?string $question = null;
+    public ?string $description = null;
+    public ?string $placeholder = null;
+    public $required = null;
+    public string $columns = "10";
 
     function formQuestion(): string
     {
